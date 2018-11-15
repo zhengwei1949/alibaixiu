@@ -38,6 +38,11 @@ checkLogin();
               <p class="help-block">https://zce.me/category/<strong>slug</strong></p>
             </div>
             <div class="form-group">
+              <label for="classname">类名</label>
+              <input id="classname" class="form-control" name="classname" type="text" placeholder="classname">
+              <p class="help-block">https://zce.me/category/<strong>slug</strong></p>
+            </div>
+            <div class="form-group">
               <button class="btn btn-primary" type="submit">添加</button>
             </div>
           </form>
@@ -53,6 +58,7 @@ checkLogin();
                 <th class="text-center" width="40"><input type="checkbox"></th>
                 <th>名称</th>
                 <th>Slug</th>
+                <th>classname</th>
                 <th class="text-center" width="100">操作</th>
               </tr>
             </thead>
@@ -61,6 +67,7 @@ checkLogin();
                 <td class="text-center"><input type="checkbox"></td>
                 <td>未分类</td>
                 <td>uncategorized</td>
+                <td>fa-class</td>
                 <td class="text-center">
                   <a href="javascript:;" class="btn btn-info btn-xs">编辑</a>
                   <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
@@ -70,6 +77,7 @@ checkLogin();
                 <td class="text-center"><input type="checkbox"></td>
                 <td>未分类</td>
                 <td>uncategorized</td>
+                <td>fa-class</td>
                 <td class="text-center">
                   <a href="javascript:;" class="btn btn-info btn-xs">编辑</a>
                   <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
@@ -79,6 +87,17 @@ checkLogin();
                 <td class="text-center"><input type="checkbox"></td>
                 <td>未分类</td>
                 <td>uncategorized</td>
+                <td>fa-class</td>
+                <td class="text-center">
+                  <a href="javascript:;" class="btn btn-info btn-xs">编辑</a>
+                  <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-center"><input type="checkbox"></td>
+                <td>未分类</td>
+                <td>uncategorized</td>
+                <td>fa-class</td>
                 <td class="text-center">
                   <a href="javascript:;" class="btn btn-info btn-xs">编辑</a>
                   <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
