@@ -62,11 +62,38 @@ $postArr = query($connect,$sql);
           </div>
         </div>
         <?php } ?>
+        <div class="loadmore">
+          <span class="btn">加载更多</span>
+        </div>
       </div>
     </div>
     <div class="footer">
       <p>© 2016 XIU主题演示 本站主题由 themebetter 提供</p>
     </div>
   </div>
+  <script src="./static/assets/vendors/jquery/jquery.js"></script>
+  <script>
+  $(function(){
+    var currentPage = 1;//默认显示第一页
+    $('.loadmore .btn').on('click',function(){
+      currentPage++;
+      var categoryId = location.search.split("=")[1];
+      //其他参数:beforeSend在发送之前可以使用return false进行取消,timeout超时,error一般用于超时的时候会触发,async同步还是异步
+      $.ajax({
+        type:'post',//get或post
+        url:'api/_getMorePost.php',//请求的地址
+        data:{
+          categoryId:categoryId,// location.search
+          currentPage:currentPage,
+          pageSize:10
+        },//如果不需要传，则注释掉 请求的参数，a=1&b=2或{a:1,b:2}或者jq中的serialize方法，或者formData收集
+        dataType:'json',//text,json,xml,jsonp
+        success:function(res){//成功的回调函数
+          console.log(res)
+        }
+      })
+    })
+  })
+  </script>
 </body>
 </html>
