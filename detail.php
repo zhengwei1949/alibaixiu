@@ -1,3 +1,16 @@
+<?php
+$id = $_GET['id'];
+require_once "config.php";
+require_once "functions.php";
+$connect = connect();//连接数据库
+$sql = "select p.id,p.title,p.content,p.views,p.likes,p.created,u.nickname,c.name from posts p
+left join users u on p.user_id = u.id 
+left join categories c on p.category_id = c.id 
+where p.id = {$id}";
+$postArr = query($connect,$sql);
+// print_r($postArr);
+$data = $postArr[0];
+?>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -24,20 +37,20 @@
         <div class="breadcrumb">
           <dl>
             <dt>当前位置：</dt>
-            <dd><a href="javascript:;">奇趣事</a></dd>
-            <dd>变废为宝！将手机旧电池变为充电宝的Better RE移动电源</dd>
+            <dd><a href="javascript:;"><?php echo $data['name'] ?></a></dd>
+            <dd><?php echo $data['title'] ?></dd>
           </dl>
         </div>
         <h2 class="title">
-          <a href="javascript:;">又现酒窝夹笔盖新技能 城里人是不让人活了！</a>
+          <a href="javascript:;"><?php echo $data['title'] ?></a>
         </h2>
         <div class="meta">
-          <span>DUX主题小秘 发布于 2015-06-29</span>
-          <span>分类: <a href="javascript:;">奇趣事</a></span>
-          <span>阅读: (2421)</span>
-          <span>评论: (143)</span>
+          <span><?php echo $data['nickname'] ?> 发布于 <?php echo $data['created'] ?></span>
+          <span>分类: <a href="javascript:;"><?php echo $data['name'] ?></a></span>
+          <span>阅读: (<?php echo $data['views'] ?>)</span>
+          <span>评论: (<?php echo $data['likes'] ?>)</span>
         </div>
-        <div class="content-detail">来儿南为开阶展头少技理声。是战火例多发价以况引机身西速识两连。置养后红和那带矿部门其交。认万建毛美了命平走断命高要反。学出走除据号可空力应基南状准除习。连感动证极只查应选周对天在空布按。日二江向农使门下八期住较边水交放较。构龙把种数术对会年政值价但例却题。要文根信七清划共界广深要指来导。包头然大东过联安与重度加农全带成后。可系说交自或上委构要意金性构习党。数时名史然话气张可少应石列结特示。</div>
+        <div class="content-detail"><?php echo $data['content'] ?></div>
       </div>
       <div class="panel hots">
         <h3>热门推荐</h3>

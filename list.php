@@ -40,7 +40,7 @@ $postArr = query($connect,$sql);
         <?php foreach($postArr as $key=>$value){ ?>
         <div class="entry">
           <div class="head">
-            <a href="javascript:;"><?php echo $value['title'] ?></a>
+            <a href="detail.php?id=<?php echo $value['id'] ?>"><?php echo $value['title'] ?></a>
           </div>
           <div class="main">
             <p class="info"><?php echo $value['nickname'] ?> 发表于 <?php echo $value['created'] ?></p>
@@ -77,7 +77,7 @@ $postArr = query($connect,$sql);
       <% for(var i=0;i<data.length;i++){ %>
         <div class="entry">
           <div class="head">
-            <a href="javascript:;"><%=data[i].title%></a>
+            <a href="detail.php?id=<%=data[i].id%>"><%=data[i].title%></a>
           </div>
           <div class="main">
             <p class="info"><%=data[i].nickname%> 发表于 <%=data[i].created%></p>
