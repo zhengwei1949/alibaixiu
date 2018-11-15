@@ -21,9 +21,9 @@ checkLogin();
         <h1>分类目录</h1>
       </div>
       <!-- 有错误信息时展示 -->
-      <!-- <div class="alert alert-danger">
-        <strong>错误！</strong>发生XXX错误
-      </div> -->
+      <div class="alert alert-danger" style="display:none;">
+        <strong>错误！</strong><span>发生XXX错误</span>
+      </div>
       <div class="row">
         <div class="col-md-4">
           <form>
@@ -43,7 +43,7 @@ checkLogin();
               <p class="help-block">https://zce.me/category/<strong>slug</strong></p>
             </div>
             <div class="form-group">
-              <button class="btn btn-primary" type="submit">添加</button>
+              <button class="btn btn-primary" type="button" id="btn-add">添加</button>
             </div>
           </form>
         </div>
@@ -104,6 +104,30 @@ checkLogin();
         $('tbody').html(html);
       }
     })
+
+
+    //新增
+    $('#btn-add').on('click',function(){
+        var name = $('#name').val();
+        var slug = $('#slug').val();
+        var classname = $('#classname').val();
+        //验证数据是否为空
+        if(name == ""){
+          $('.alert').show();
+          $('.alert span').text('用户名不能为空');
+          return;
+        }
+        if(slug == ""){
+          $('.alert').show();
+          $('.alert span').text('别名不能为空');
+          return;
+        }
+        if(classname == ""){
+          $('.alert').show();
+          $('.alert span').text('类名不能为空');
+          return;
+        }
+      })
   })
   </script>
 </body>
