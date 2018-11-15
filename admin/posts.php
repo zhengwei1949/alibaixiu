@@ -41,11 +41,11 @@ checkLogin();
           <button class="btn btn-default btn-sm">筛选</button>
         </form>
         <ul class="pagination pagination-sm pull-right">
-          <li><a href="#">上一页</a></li>
+          <!-- <li><a href="#">上一页</a></li>
           <li><a href="#">1</a></li>
           <li><a href="#">2</a></li>
           <li><a href="#">3</a></li>
-          <li><a href="#">下一页</a></li>
+          <li><a href="#">下一页</a></li> -->
         </ul>
       </div>
       <table class="table table-striped table-bordered table-hover">
@@ -96,21 +96,74 @@ checkLogin();
         <% } %>
   </script>
   <script>
-    //1. 请求后台，把文章数据请求出来，动态的渲染表格结构
-    $(function(){
+    var pageSize = 20;//每一页只显示20条数据
+    var currentPage = 4;//默认显示第一磁数据
+    var totalPage;
+    var size = 5;//页码只显示5页
+    
+    function renderPage(){
+      var html = '<li class="prev"><a href="#">上一页</a></li>';
+      if(currentPage <= 3){
+        var first = 1;
+        var last = first + 4;
+      }else if(currentPage >= totalPage - 2){
+        var last = totalPage;
+        var first = last - 4;
+      }else{
+        var first = currentPage - 2;
+        var last = currentPage + 2;
+      }
+      for(var i=first;i<=last;i++){
+        if(i == currentPage){
+          html += '<li class="active"><a href="#">'+i+'</a></li>';
+        }else{
+          html += '<li><a href="#">'+i+'</a></li>';
+        }
+      }
+      html += '<li class="next"><a href="#">下一页</a></li>';
+      $('.pagination').html(html);
+    }
+    
+
+    $('.pagination').on('click','.prev',function(){
+      if(currentPage == 1)return;
+      currentPage--;
+      console.log(currentPage);
+      renderContent();
+    })
+
+    $('.pagination').on('click','.next',function(){
+      if(currentPage == totalPage)return;
+      currentPage++;
+      console.log(currentPage);
+      renderContent();
+    })
+
+    function renderContent(){
       //第一次请求，把数据请求回来，动态生成表格
       //其他参数:beforeSend在发送之前可以使用return false进行取消,timeout超时,error一般用于超时的时候会触发,async同步还是异步
       $.ajax({
         type:'post',//get或post
         url:'api/_getPostsData.php',//请求的地址
-        // data:{},//如果不需要传，则注释掉 请求的参数，a=1&b=2或{a:1,b:2}或者jq中的serialize方法，或者formData收集
+        data:{
+          currentPage:currentPage,
+          pageSize:pageSize
+        },//如果不需要传，则注释掉 请求的参数，a=1&b=2或{a:1,b:2}或者jq中的serialize方法，或者formData收集
         dataType:'json',//text,json,xml,jsonp
         success:function(res){//成功的回调函数
           // console.log(res)
           var html = template('tpl',res);
           $('tbody').html(html);
+          totalPage = Math.ceil(res.count / pageSize);
+          renderPage();
         }
       })
+    }
+    renderContent();
+
+    //1. 请求后台，把文章数据请求出来，动态的渲染表格结构
+    $(function(){
+      
     })
   </script>
 </body>
