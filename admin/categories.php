@@ -44,6 +44,8 @@ checkLogin();
             </div>
             <div class="form-group">
               <button class="btn btn-primary" type="button" id="btn-add">添加</button>
+              <button class="btn btn-primary" type="button" id="btn-edit" style="display:none;">编辑完成</button>
+              <button class="btn btn-primary" type="button" id="btn-cancle" style="display:none;">取消编辑</button>
             </div>
           </form>
         </div>
@@ -151,6 +153,13 @@ checkLogin();
             }
           }
         })
+      })
+
+      //编辑第一步：点击编辑按钮显示编辑完成编辑取消按钮
+      $('tbody').on('click','.edit',function(){
+        $('#btn-add').hide();
+        $('#btn-edit').show();
+        $('#btn-cancle').show();
       })
   })
   </script>
