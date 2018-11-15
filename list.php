@@ -1,7 +1,8 @@
 <?php
 $categoryId = $_GET['categoryId'];
 require_once "config.php";
-$connect = mysqli_connect(DB_HOST,DB_USER,DB_PWD,DB_NAME);//连接数据库
+require_once "functions.php";
+$connect = connect();//连接数据库
 $sql = "select p.id,p.title,p.feature,p.created,p.content,p.views,p.likes,c.name,u.nickname,
 (select count(*) from comments where comments.post_id = p.id) as commentCount
 from posts p
@@ -9,11 +10,7 @@ left join categories c on p.category_id = c.id
 left join users u on p.user_id = u.id
 where p.category_id = {$categoryId}
 limit 10";
-$postResult = mysqli_query($connect,$sql);//查询数据库
-$postArr = [];//准备一个空的数组
-while($row = mysqli_fetch_assoc($postResult)){//把每一次取出来的记录
-  $postArr[] = $row;
-}
+$postArr = query($connect,$sql);
 // print_r($postArr);
 ?>
 <!DOCTYPE html>
