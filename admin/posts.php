@@ -61,42 +61,7 @@ checkLogin();
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td class="text-center"><input type="checkbox"></td>
-            <td>随便一个名称</td>
-            <td>小小</td>
-            <td>潮科技</td>
-            <td class="text-center">2016/10/07</td>
-            <td class="text-center">已发布</td>
-            <td class="text-center">
-              <a href="javascript:;" class="btn btn-default btn-xs">编辑</a>
-              <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
-            </td>
-          </tr>
-          <tr>
-            <td class="text-center"><input type="checkbox"></td>
-            <td>随便一个名称</td>
-            <td>小小</td>
-            <td>潮科技</td>
-            <td class="text-center">2016/10/07</td>
-            <td class="text-center">已发布</td>
-            <td class="text-center">
-              <a href="javascript:;" class="btn btn-default btn-xs">编辑</a>
-              <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
-            </td>
-          </tr>
-          <tr>
-            <td class="text-center"><input type="checkbox"></td>
-            <td>随便一个名称</td>
-            <td>小小</td>
-            <td>潮科技</td>
-            <td class="text-center">2016/10/07</td>
-            <td class="text-center">已发布</td>
-            <td class="text-center">
-              <a href="javascript:;" class="btn btn-default btn-xs">编辑</a>
-              <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
-            </td>
-          </tr>
+          
         </tbody>
       </table>
     </div>
@@ -106,5 +71,47 @@ checkLogin();
 
   <script src="../static/assets/vendors/jquery/jquery.js"></script>
   <script src="../static/assets/vendors/bootstrap/js/bootstrap.js"></script>
+  <script src="../static/assets/vendors/art-template/template-web.js"></script>
+  <script type="text/template" id="tpl">
+      <%
+        var statusData = {
+          "drafted":"草稿",
+          "published":"已发布",
+          "trashed":"已作废"
+        };
+      %>
+      <% for(var i=0;i<data.length;i++){ %>
+      <tr>
+          <td class="text-center"><input type="checkbox"></td>
+          <td><%=data[i].title%></td>
+          <td><%=data[i].nickname%></td>
+          <td><%=data[i].name%></td>
+          <td class="text-center"><%=data[i].created%></td>
+          <td class="text-center"><%=statusData[data[i].status]%></td>
+          <td class="text-center">
+            <a href="javascript:;" class="btn btn-default btn-xs">编辑</a>
+            <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
+          </td>
+        </tr>
+        <% } %>
+  </script>
+  <script>
+    //1. 请求后台，把文章数据请求出来，动态的渲染表格结构
+    $(function(){
+      //第一次请求，把数据请求回来，动态生成表格
+      //其他参数:beforeSend在发送之前可以使用return false进行取消,timeout超时,error一般用于超时的时候会触发,async同步还是异步
+      $.ajax({
+        type:'post',//get或post
+        url:'api/_getPostsData.php',//请求的地址
+        // data:{},//如果不需要传，则注释掉 请求的参数，a=1&b=2或{a:1,b:2}或者jq中的serialize方法，或者formData收集
+        dataType:'json',//text,json,xml,jsonp
+        success:function(res){//成功的回调函数
+          // console.log(res)
+          var html = template('tpl',res);
+          $('tbody').html(html);
+        }
+      })
+    })
+  </script>
 </body>
 </html>
