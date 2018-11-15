@@ -52,7 +52,7 @@ checkLogin();
         <div class="col-md-8">
           <div class="page-action">
             <!-- show when multiple checked -->
-            <a class="btn btn-danger btn-sm" href="javascript:;" style="display: none">批量删除</a>
+            <a id="delAll" class="btn btn-danger btn-sm" href="javascript:;" style="display: none">批量删除</a>
           </div>
           <table class="table table-striped table-bordered table-hover">
             <thead>
@@ -220,6 +220,57 @@ checkLogin();
             // console.log(res)
             if(res.code == 1){
               row.remove();
+            }
+          }
+        })
+      })
+
+      //全选功能的实现
+      $('thead input').on('click',function(){
+        var status = $(this).prop('checked');
+        $('tbody input').prop('checked',status);
+        if(status){
+          $('#delAll').show();
+        }else{
+          $('#delAll').hide();
+        }
+      })
+      //使用事件委托的方式为别的多选框注册点击事件
+      $('tbody').on('click','input',function(){
+        //控制全选的多选框是否选中，只有当所选的多选框都选中，全选才选中
+        var all = $('thead input');
+        var cks = $('tbody input');
+        //如果cks里面的所有的多选框都选中了，全选也选中了
+        all.prop('checked',cks.size() == $('tbody input:checked').size())
+        if($('tbody input:checked').size() >= 2){
+          $('#delAll').show();
+        }else{
+          $('#delAll').hide();
+        }
+      })
+
+      //点击批量删除
+      $('#delAll').on('click',function(){
+        //准备好的收集
+        //收集所有的选中的id，发送到服务器进行数据的删除
+        var cks = $('tbody input:checked');
+        //遍历数组，找到所有选中的id
+        var ids = [];
+        cks.each(function(index,el){
+          var id = $(el).parents('tr').attr('data-id');
+          ids.push(id);
+        })
+        //其他参数:beforeSend在发送之前可以使用return false进行取消,timeout超时,error一般用于超时的时候会触发,async同步还是异步
+        $.ajax({
+          type:'post',//get或post
+          url:'api/_delCategories.php',//请求的地址
+          data:{ids:ids},//如果不需要传，则注释掉 请求的参数，a=1&b=2或{a:1,b:2}或者jq中的serialize方法，或者formData收集
+          dataType:'json',//text,json,xml,jsonp
+          success:function(res){//成功的回调函数
+            // console.log(res)
+            if(res.code == 1){
+              cks.parents('tr').remove();
+              $('#delAll').hide();
             }
           }
         })
