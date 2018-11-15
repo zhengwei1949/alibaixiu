@@ -120,6 +120,10 @@ $postArr = query($connect,$sql);
           // console.log(res)
           var html = template('tpl',res);
           $('.loadmore').before(html);
+          var maxPage = Math.ceil(res.count / 10);
+          if(currentPage >= maxPage){
+            $('.loadmore').hide();
+          }
         }
       })
     })

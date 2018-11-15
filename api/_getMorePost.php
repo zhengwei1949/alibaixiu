@@ -15,11 +15,20 @@ where p.category_id = {$categoryId}
 limit {$offset},{$pageSize}";//准备一个sql语句
 $queryResult = query($connect,$sql);//变量的名字是可以随便写
 
+
+//查询总条数
+$sqlCount = "select count(*) as postCount from posts where category_id = {$categoryId}";
+$queryCount = query($connect,$sqlCount); 
+// print_r($queryCount);一定要注释掉
+$count = $queryCount[0]['postCount'];
+
 $response = ["code"=>0,"msg"=>"操作失败"];//不管成功还是失败，前台都能拿到数据
 if($queryResult){
     $response["code"] = 1;//成功
     $response["msg"] = "操作成功";
     $response["data"] = $queryResult;
+    //总条数
+    $response['count'] = $count;
 }
 header('content-type:application/json;charset=utf8');
 echo json_encode($response);
