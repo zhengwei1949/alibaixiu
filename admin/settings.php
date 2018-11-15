@@ -73,7 +73,7 @@ checkLogin();
       </form>
     </div>
   </div>
-
+  <?php $current_page = 'settings' ?>
   <?php include_once "public/_aside.php" ?>
 
   <script src="../static/assets/vendors/jquery/jquery.js"></script>

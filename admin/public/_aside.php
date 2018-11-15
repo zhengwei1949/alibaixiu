@@ -1,3 +1,6 @@
+<div style="position:fixed;right:10px;top:10px;font-size:30px;color:red;z-index:9999;">
+<?php echo $current_page ?>
+</div>
 <div class="aside">
     <div class="profile">
       <img class="avatar" src="../static/uploads/avatar.jpg">

@@ -87,7 +87,7 @@ checkLogin();
       </div>
     </div>
   </div>
-
+  <?php $current_page = 'slides' ?>
   <?php include_once "public/_aside.php" ?>
 
   <script src="../static/assets/vendors/jquery/jquery.js"></script>

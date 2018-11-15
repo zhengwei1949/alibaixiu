@@ -72,7 +72,7 @@ checkLogin();
       </form>
     </div>
   </div>
-
+  <?php $current_page = 'post-add' ?>
   <?php include_once "public/_aside.php" ?>
 <script src="../static/assets/vendors/jquery/jquery.js"></script>
 <script src="../static/assets/vendors/bootstrap/js/bootstrap.js"></script>

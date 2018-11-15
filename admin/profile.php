@@ -71,7 +71,7 @@ checkLogin();
       </form>
     </div>
   </div>
-
+  <?php $current_page = 'profile' ?>
   <?php include_once "public/_aside.php" ?>
 
   <script src="../static/assets/vendors/jquery/jquery.js"></script>

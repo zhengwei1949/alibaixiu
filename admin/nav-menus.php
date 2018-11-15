@@ -94,7 +94,7 @@ checkLogin();
       </div>
     </div>
   </div>
-
+  <?php $current_page = 'nav-menus' ?>
   <?php include_once "public/_aside.php" ?>
 
   <script src="../static/assets/vendors/jquery/jquery.js"></script>
