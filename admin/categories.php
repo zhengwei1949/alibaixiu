@@ -92,18 +92,22 @@ checkLogin();
   </script>
   <script>
   $(function(){
-    $.ajax({
-      type:'post',//get或post
-      url:'api/_getCategoryData.php',//请求的地址
-      // data:{},//如果不需要传，则注释掉 请求的参数，a=1&b=2或{a:1,b:2}或者jq中的serialize方法，或者formData收集
-      dataType:'json',//text,json,xml,jsonp
-      success:function(res){//成功的回调函数
-        console.log(res)
-        // template('模板id',数据(一定要是对象))
-        var html = template('tpl',res);
-        $('tbody').html(html);
-      }
-    })
+    function render(){
+      $.ajax({
+        type:'post',//get或post
+        url:'api/_getCategoryData.php',//请求的地址
+        // data:{},//如果不需要传，则注释掉 请求的参数，a=1&b=2或{a:1,b:2}或者jq中的serialize方法，或者formData收集
+        dataType:'json',//text,json,xml,jsonp
+        success:function(res){//成功的回调函数
+          console.log(res)
+          // template('模板id',数据(一定要是对象))
+          var html = template('tpl',res);
+          $('tbody').html(html);
+        }
+      })
+    }
+
+    render();
 
 
     //新增
@@ -143,7 +147,7 @@ checkLogin();
               $('.alert').show();
               $('.alert span').text(res.msg);
             }else if(res.code == 1){
-              
+              render();
             }
           }
         })
