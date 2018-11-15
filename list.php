@@ -1,3 +1,21 @@
+<?php
+$categoryId = $_GET['categoryId'];
+require_once "config.php";
+$connect = mysqli_connect(DB_HOST,DB_USER,DB_PWD,DB_NAME);//连接数据库
+$sql = "select p.id,p.title,p.feature,p.created,p.content,p.views,p.likes,c.name,u.nickname,
+(select count(*) from comments where comments.post_id = p.id) as commentCount
+from posts p
+left join categories c on p.category_id = c.id 
+left join users u on p.user_id = u.id
+where p.category_id = {$categoryId}
+limit 10";
+$postResult = mysqli_query($connect,$sql);//查询数据库
+$postArr = [];//准备一个空的数组
+while($row = mysqli_fetch_assoc($postResult)){//把每一次取出来的记录
+  $postArr[] = $row;
+}
+// print_r($postArr);
+?>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -22,75 +40,31 @@
     <div class="content">
       <div class="panel new">
         <h3>会生活</h3>
+        <?php foreach($postArr as $key=>$value){ ?>
         <div class="entry">
           <div class="head">
-            <a href="javascript:;">星球大战：原力觉醒视频演示 电影票68</a>
+            <a href="javascript:;"><?php echo $value['title'] ?></a>
           </div>
           <div class="main">
-            <p class="info">admin 发表于 2015-06-29</p>
-            <p class="brief">星球大战:原力觉醒：《星球大战:原力觉醒》中国首映盛典红毯，星球大战:原力觉醒：《星球大战:原力觉醒》中国首映盛典红毯，星球大战:原力觉醒：《星球大战:原力觉醒》中国首映盛典红毯星球大战:原力觉醒：《星球大战:原力觉醒》中国首映盛典红毯，星球大战:原力觉醒：《星球大战:原力觉醒》中国首映盛典红毯，星球大战:原力觉醒：《星球大战:原力觉醒》中国首映盛典红毯</p>
+            <p class="info"><?php echo $value['nickname'] ?> 发表于 <?php echo $value['created'] ?></p>
+            <p class="brief"><?php echo $value['content'] ?></p>
             <p class="extra">
-              <span class="reading">阅读(3406)</span>
-              <span class="comment">评论(0)</span>
+              <span class="reading">阅读(<?php echo $value['views'] ?>)</span>
+              <span class="comment">评论(<?php echo $value['commentCount'] ?>)</span>
               <a href="javascript:;" class="like">
                 <i class="fa fa-thumbs-up"></i>
-                <span>赞(167)</span>
+                <span>赞(<?php echo $value['likes'] ?>)</span>
               </a>
               <a href="javascript:;" class="tags">
-                分类：<span>星球大战</span>
+                分类：<span><?php echo $value['name'] ?></span>
               </a>
             </p>
             <a href="javascript:;" class="thumb">
-              <img src="static/uploads/hots_2.jpg" alt="">
+              <img src="<?php echo $value['feature'] ?>" alt="">
             </a>
           </div>
         </div>
-        <div class="entry">
-          <div class="head">
-            <a href="javascript:;">星球大战：原力觉醒视频演示 电影票68</a>
-          </div>
-          <div class="main">
-            <p class="info">admin 发表于 2015-06-29</p>
-            <p class="brief">星球大战:原力觉醒：《星球大战:原力觉醒》中国首映盛典红毯，星球大战:原力觉醒：《星球大战:原力觉醒》中国首映盛典红毯，星球大战:原力觉醒：《星球大战:原力觉醒》中国首映盛典红毯星球大战:原力觉醒：《星球大战:原力觉醒》中国首映盛典红毯，星球大战:原力觉醒：《星球大战:原力觉醒》中国首映盛典红毯，星球大战:原力觉醒：《星球大战:原力觉醒》中国首映盛典红毯</p>
-            <p class="extra">
-              <span class="reading">阅读(3406)</span>
-              <span class="comment">评论(0)</span>
-              <a href="javascript:;" class="like">
-                <i class="fa fa-thumbs-up"></i>
-                <span>赞(167)</span>
-              </a>
-              <a href="javascript:;" class="tags">
-                分类：<span>星球大战</span>
-              </a>
-            </p>
-            <a href="javascript:;" class="thumb">
-              <img src="static/uploads/hots_2.jpg" alt="">
-            </a>
-          </div>
-        </div>
-        <div class="entry">
-          <div class="head">
-            <a href="javascript:;">星球大战：原力觉醒视频演示 电影票68</a>
-          </div>
-          <div class="main">
-            <p class="info">admin 发表于 2015-06-29</p>
-            <p class="brief">星球大战:原力觉醒：《星球大战:原力觉醒》中国首映盛典红毯，星球大战:原力觉醒：《星球大战:原力觉醒》中国首映盛典红毯，星球大战:原力觉醒：《星球大战:原力觉醒》中国首映盛典红毯星球大战:原力觉醒：《星球大战:原力觉醒》中国首映盛典红毯，星球大战:原力觉醒：《星球大战:原力觉醒》中国首映盛典红毯，星球大战:原力觉醒：《星球大战:原力觉醒》中国首映盛典红毯</p>
-            <p class="extra">
-              <span class="reading">阅读(3406)</span>
-              <span class="comment">评论(0)</span>
-              <a href="javascript:;" class="like">
-                <i class="fa fa-thumbs-up"></i>
-                <span>赞(167)</span>
-              </a>
-              <a href="javascript:;" class="tags">
-                分类：<span>星球大战</span>
-              </a>
-            </p>
-            <a href="javascript:;" class="thumb">
-              <img src="static/uploads/hots_2.jpg" alt="">
-            </a>
-          </div>
-        </div>
+        <?php } ?>
       </div>
     </div>
     <div class="footer">

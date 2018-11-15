@@ -12,7 +12,7 @@ while($row = mysqli_fetch_assoc($queryResult)){
     <h1 class="logo"><a href="index.php"><img src="static/assets/img/logo.png" alt=""></a></h1>
     <ul class="nav">
     <?php foreach($arr as $key=>$value){ ?>
-    <li><a href="javascript:;"><i class="fa fa-glass"></i><?php echo $value['name'] ?></a></li>
+    <li><a href="list.php?categoryId=<?php echo $value['id'] ?>"><i class="fa fa-glass"></i><?php echo $value['name'] ?></a></li>
     <?php } ?>
     </ul>
     <div class="search">
