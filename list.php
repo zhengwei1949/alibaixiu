@@ -72,6 +72,34 @@ $postArr = query($connect,$sql);
     </div>
   </div>
   <script src="./static/assets/vendors/jquery/jquery.js"></script>
+  <script src="./static/assets/vendors/art-template/template-web.js"></script>
+  <script type="text/template" id="tpl">
+      <% for(var i=0;i<data.length;i++){ %>
+        <div class="entry">
+          <div class="head">
+            <a href="javascript:;"><%=data[i].title%></a>
+          </div>
+          <div class="main">
+            <p class="info"><%=data[i].nickname%> 发表于 <%=data[i].created%></p>
+            <p class="brief"><%=data[i].content%></p>
+            <p class="extra">
+              <span class="reading">阅读(<%=data[i].views%>)</span>
+              <span class="comment">评论(<%=data[i].commentCount%>)</span>
+              <a href="javascript:;" class="like">
+                <i class="fa fa-thumbs-up"></i>
+                <span>赞(<%=data[i].likes%>)</span>
+              </a>
+              <a href="javascript:;" class="tags">
+                分类：<span><%=data[i].name%></span>
+              </a>
+            </p>
+            <a href="javascript:;" class="thumb">
+              <img src="<%=data[i].feature%>" alt="">
+            </a>
+          </div>
+        </div>
+        <% } %>
+  </script>
   <script>
   $(function(){
     var currentPage = 1;//默认显示第一页
@@ -89,7 +117,9 @@ $postArr = query($connect,$sql);
         },//如果不需要传，则注释掉 请求的参数，a=1&b=2或{a:1,b:2}或者jq中的serialize方法，或者formData收集
         dataType:'json',//text,json,xml,jsonp
         success:function(res){//成功的回调函数
-          console.log(res)
+          // console.log(res)
+          var html = template('tpl',res);
+          $('.loadmore').before(html);
         }
       })
     })
