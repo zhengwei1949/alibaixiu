@@ -40,3 +40,18 @@
       </li>
     </ul>
   </div>
+<script src="../static/assets/vendors/jquery/jquery.js"></script>
+<script>
+$(function(){
+  //其他参数:beforeSend在发送之前可以使用return false进行取消,timeout超时,error一般用于超时的时候会触发,async同步还是异步
+  $.ajax({
+    type:'post',//get或post
+    url:'api/_getUserAvatar.php',//请求的地址
+    // data:{},//如果不需要传，则注释掉 请求的参数，a=1&b=2或{a:1,b:2}或者jq中的serialize方法，或者formData收集
+    dataType:'json',//text,json,xml,jsonp
+    success:function(res){//成功的回调函数
+      console.log(res)
+    }
+  })
+})
+</script>
