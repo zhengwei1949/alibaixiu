@@ -63,46 +63,7 @@ checkLogin();
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td class="text-center"><input type="checkbox"></td>
-                <td>未分类</td>
-                <td>uncategorized</td>
-                <td>fa-class</td>
-                <td class="text-center">
-                  <a href="javascript:;" class="btn btn-info btn-xs">编辑</a>
-                  <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
-                </td>
-              </tr>
-              <tr>
-                <td class="text-center"><input type="checkbox"></td>
-                <td>未分类</td>
-                <td>uncategorized</td>
-                <td>fa-class</td>
-                <td class="text-center">
-                  <a href="javascript:;" class="btn btn-info btn-xs">编辑</a>
-                  <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
-                </td>
-              </tr>
-              <tr>
-                <td class="text-center"><input type="checkbox"></td>
-                <td>未分类</td>
-                <td>uncategorized</td>
-                <td>fa-class</td>
-                <td class="text-center">
-                  <a href="javascript:;" class="btn btn-info btn-xs">编辑</a>
-                  <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
-                </td>
-              </tr>
-              <tr>
-                <td class="text-center"><input type="checkbox"></td>
-                <td>未分类</td>
-                <td>uncategorized</td>
-                <td>fa-class</td>
-                <td class="text-center">
-                  <a href="javascript:;" class="btn btn-info btn-xs">编辑</a>
-                  <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
-                </td>
-              </tr>
+              
             </tbody>
           </table>
         </div>
@@ -114,5 +75,36 @@ checkLogin();
 
   <script src="../static/assets/vendors/jquery/jquery.js"></script>
   <script src="../static/assets/vendors/bootstrap/js/bootstrap.js"></script>
+  <script src="../static/assets/vendors/art-template/template-web.js"></script>
+  <script type="text/template" id="tpl">
+      <% for(var i=0;i<data.length;i++){ %>
+        <tr>
+          <td class="text-center"><input type="checkbox"></td>
+          <td><%=data[i].name%></td>
+          <td><%=data[i].slug%></td>
+          <td><%=data[i].classname%></td>
+          <td class="text-center">
+            <a href="javascript:;" class="btn btn-info btn-xs edit">编辑</a>
+            <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
+          </td>
+        </tr>
+      <% } %>
+  </script>
+  <script>
+  $(function(){
+    $.ajax({
+      type:'post',//get或post
+      url:'api/_getCategoryData.php',//请求的地址
+      // data:{},//如果不需要传，则注释掉 请求的参数，a=1&b=2或{a:1,b:2}或者jq中的serialize方法，或者formData收集
+      dataType:'json',//text,json,xml,jsonp
+      success:function(res){//成功的回调函数
+        console.log(res)
+        // template('模板id',数据(一定要是对象))
+        var html = template('tpl',res);
+        $('tbody').html(html);
+      }
+    })
+  })
+  </script>
 </body>
 </html>
