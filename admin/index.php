@@ -1,8 +1,7 @@
 <?php
-session_start();
-if(!isset($_SESSION['isLogin']) || $_SESSION['isLogin'] != 1){
-  header('location:./login.php');
-}
+require_once "../config.php";
+require_once "../functions.php";
+checkLogin();
 ?>
 <!DOCTYPE html>
 <html lang="zh-CN">

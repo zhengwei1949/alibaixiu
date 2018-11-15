@@ -1,4 +1,11 @@
 <?php
+//登录验证
+function checkLogin(){
+  session_start();
+  if(!isset($_SESSION['isLogin']) || $_SESSION['isLogin'] != 1){
+    header('location:./login.php');
+  }
+}
 //连接数据库
 function connect(){
     $connect = mysqli_connect(DB_HOST,DB_USER,DB_PWD,DB_NAME);

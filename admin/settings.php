@@ -1,3 +1,8 @@
+<?php
+require_once "../config.php";
+require_once "../functions.php";
+checkLogin();
+?>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
