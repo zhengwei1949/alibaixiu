@@ -80,14 +80,14 @@ checkLogin();
   <script src="../static/assets/vendors/art-template/template-web.js"></script>
   <script type="text/template" id="tpl">
       <% for(var i=0;i<data.length;i++){ %>
-        <tr>
+        <tr data-id="<%=data[i].id%>">
           <td class="text-center"><input type="checkbox"></td>
           <td><%=data[i].name%></td>
           <td><%=data[i].slug%></td>
           <td><%=data[i].classname%></td>
           <td class="text-center">
             <a href="javascript:;" class="btn btn-info btn-xs edit" data-id="<%=data[i].id%>">编辑</a>
-            <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
+            <a href="javascript:;" class="btn btn-danger btn-xs del">删除</a>
           </td>
         </tr>
       <% } %>
@@ -202,6 +202,27 @@ checkLogin();
         $('#add-edit').hide();
         $('#add-cancle').hide();
         document.querySelector('#myform').reset();
+      })
+
+      //删除功能
+      $('tbody').on('click','.del',function(){
+        var row = $(this).parents('tr');
+        var id = $(this).parents('tr').attr('data-id');
+        //其他参数:beforeSend在发送之前可以使用return false进行取消,timeout超时,error一般用于超时的时候会触发,async同步还是异步
+        $.ajax({
+          type:'post',//get或post
+          url:'api/_delCategory.php',//请求的地址
+          data:{
+            id:id
+          },//如果不需要传，则注释掉 请求的参数，a=1&b=2或{a:1,b:2}或者jq中的serialize方法，或者formData收集
+          dataType:'json',//text,json,xml,jsonp
+          success:function(res){//成功的回调函数
+            // console.log(res)
+            if(res.code == 1){
+              row.remove();
+            }
+          }
+        })
       })
   })
   </script>
