@@ -62,6 +62,24 @@
         $('#text').html('邮箱格式不对');
         return;
       }
+      $.ajax({
+        type:'post',//get或post
+        url:'./api/_userLogin.php',//请求的地址
+        data:{
+          email:email,
+          password:password
+        },//如果不需要传，则注释掉 请求的参数，a=1&b=2或{a:1,b:2}或者jq中的serialize方法，或者formData收集
+        dataType:'json',//text,json,xml,jsonp
+        success:function(res){//成功的回调函数
+          // console.log(res)
+          if(res.code == 1){
+            location.href = 'index.php';
+          }else{
+            $('#msg').show();
+            $('#text').html('用户名或密码错误');
+          }
+        }
+      })
     })
   })
   </script>
