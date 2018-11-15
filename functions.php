@@ -28,4 +28,13 @@ function fetch($result){
   }
   return $arr;
 }
+
+//新增
+function insert($connect,$table,$arr){
+  $str1 = implode(",",array_keys($arr));
+    $str2 = "'".implode("','",array_values($arr))."'";
+    $sql = "insert into {$table} (".$str1.") values (".$str2.")";
+    $addResult = mysqli_query($connect,$sql);
+    return $addResult;
+}
 ?>

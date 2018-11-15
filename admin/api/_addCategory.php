@@ -17,10 +17,7 @@ $response = ["code"=>0,"msg"=>"操作失败"];
 if($count == 1){
     $response["msg"] = "分类名重复了";
 }else{
-    $str1 = implode(",",array_keys($_POST));
-    $str2 = "'".implode("','",array_values($_POST))."'";
-    $sql = "insert into categories (".$str1.") values (".$str2.")";
-    $addResult = mysqli_query($connect,$sql);
+    $addResult = insert($connect,'categories',$_POST);
     if($addResult){
         $response["code"] = 1;
         $response["msg"] = "插入成功";
