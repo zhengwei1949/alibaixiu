@@ -28,10 +28,11 @@
         <a href="users.php"><i class="fa fa-users"></i>用户</a>
       </li>
       <li>
-        <a href="#menu-settings" class="collapsed" data-toggle="collapse">
+        <?php $settingArr = ['nav-menus','slides','settings'] ?>
+        <a href="#menu-settings" class="<?php echo in_array($current_page,$settingArr)?'':'collapsed' ?>" data-toggle="collapse">
           <i class="fa fa-cogs"></i>设置<i class="fa fa-angle-right"></i>
         </a>
-        <ul id="menu-settings" class="collapse">
+        <ul id="menu-settings" class="collapse <?php echo in_array($current_page,$settingArr)?'in':'' ?>">
           <li class="<?php echo $current_page=='nav-menus'?'active':'' ?>"><a href="nav-menus.php">导航菜单</a></li>
           <li class="<?php echo $current_page=='slides'?'active':'' ?>"><a href="slides.php">图片轮播</a></li>
           <li class="<?php echo $current_page=='settings'?'active':'' ?>"><a href="settings.php">网站设置</a></li>
