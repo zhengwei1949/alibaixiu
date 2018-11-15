@@ -86,7 +86,7 @@ checkLogin();
           <td><%=data[i].slug%></td>
           <td><%=data[i].classname%></td>
           <td class="text-center">
-            <a href="javascript:;" class="btn btn-info btn-xs edit">编辑</a>
+            <a href="javascript:;" class="btn btn-info btn-xs edit" data-id="<%=data[i].id%>">编辑</a>
             <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
           </td>
         </tr>
@@ -160,6 +160,48 @@ checkLogin();
         $('#btn-add').hide();
         $('#btn-edit').show();
         $('#btn-cancle').show();
+        var id = $(this).attr('data-id');
+        $('#btn-edit').attr('data-id',id);
+        var name = $(this).parents('tr').find('td:eq(1)').text();
+        var slug = $(this).parents('tr').find('td:eq(2)').text();
+        var classname = $(this).parents('tr').find('td:eq(3)').text();
+        $('#name').val(name);
+        $('#slug').val(slug);
+        $('#classname').val(classname);
+      })
+      
+      //给编辑完成添加点击事件
+      $('#btn-edit').on('click',function(){
+        var name = $('#name').val();
+        var slug = $('#slug').val();
+        var classname = $('#classname').val();
+        var id = $(this).attr('data-id');
+        //其他参数:beforeSend在发送之前可以使用return false进行取消,timeout超时,error一般用于超时的时候会触发,async同步还是异步
+        $.ajax({
+          type:'post',//get或post
+          url:'api/_updateCategory.php',//请求的地址
+          data:{
+            id:id,
+            name:name,
+            classname:classname,
+            slug:slug
+          },//如果不需要传，则注释掉 请求的参数，a=1&b=2或{a:1,b:2}或者jq中的serialize方法，或者formData收集
+          dataType:'json',//text,json,xml,jsonp
+          success:function(res){//成功的回调函数
+            // console.log(res)
+            if(res.code == 1){
+              location.reload();//刷新当前页面
+            }
+          }
+        })
+      })
+      
+      //取消编辑
+      $('#btn-cancle').on('click',function(){
+        $('#add-btn').show();
+        $('#add-edit').hide();
+        $('#add-cancle').hide();
+        document.querySelector('#myform').reset();
       })
   })
   </script>
