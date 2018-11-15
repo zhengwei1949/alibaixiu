@@ -1,3 +1,9 @@
+<?php
+session_start();
+if(!isset($_SESSION['isLogin']) || $_SESSION['isLogin'] != 1){
+  header('location:./login.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>

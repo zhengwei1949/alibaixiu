@@ -12,6 +12,8 @@ $queryResult = query($connect,$sql);
 // print_r($queryResult);
 $response = ["code"=>0,"msg"=>"失败"];
 if($queryResult){
+    session_start();//开启session
+    $_SESSION['isLogin'] = 1;
     $response["code"] = 1;
     $response["msg"] = "成功";
 }
