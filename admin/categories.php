@@ -26,7 +26,7 @@ checkLogin();
       </div>
       <div class="row">
         <div class="col-md-4">
-          <form>
+          <form id="myform">
             <h2>添加新分类目录</h2>
             <div class="form-group">
               <label for="name">名称</label>
@@ -127,6 +127,26 @@ checkLogin();
           $('.alert span').text('类名不能为空');
           return;
         }
+        $.ajax({
+          type:'post',//get或post 安全
+          url:'api/_addCategory.php',//请求的地址
+          data:$('#myform').serialize(),
+          // data:{
+          //   name:name,
+          //   slug:slug,
+          //   classname:classname
+          // },//如果不需要传，则注释掉 请求的参数，a=1&b=2或{a:1,b:2}或者jq中的serialize方法，或者formData收集
+          dataType:'json',//text,json,xml,jsonp
+          success:function(res){//成功的回调函数
+            // console.log(res)
+            if(res.code == 0){
+              $('.alert').show();
+              $('.alert span').text(res.msg);
+            }else if(res.code == 1){
+              
+            }
+          }
+        })
       })
   })
   </script>
