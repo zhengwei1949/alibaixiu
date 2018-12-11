@@ -102,6 +102,7 @@ while($row = mysqli_fetch_assoc($postResult)){//把每一次取出来的记录
           </li>
         </ul>
       </div>
+      
       <div class="panel top">
         <h3>一周热门排行</h3>
         <ol>
